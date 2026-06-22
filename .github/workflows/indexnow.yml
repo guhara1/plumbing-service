@@ -1,0 +1,41 @@
+name: IndexNow notify
+
+# main 에 푸시(=콘텐츠 추가/수정)될 때마다 빙·네이버·얀덱스에 즉시 색인 통보.
+# 수동 실행도 가능(Actions 탭 → Run workflow).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: "통보할 경로(공백 구분). 비우면 sitemap 전체."
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build (sitemap 갱신)
+        run: node scripts/build.mjs
+        env:
+          SITE_URL: https://plumbing-service-afo.pages.dev
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: IndexNow 통보 (빙·네이버·얀덱스)
+        run: python tools/indexnow.py ${{ github.event.inputs.paths }}
+        env:
+          HOST: plumbing-service-afo.pages.dev
+          INDEXNOW_KEY: b00508e375ed8ff4e993dc41ca0b8c4a
