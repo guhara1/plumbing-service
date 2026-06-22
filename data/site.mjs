@@ -10,7 +10,7 @@ export const site = {
   phoneHref: "/contact/",
   // 버튼 등에 쓰는 CTA 문구 (전화번호 미정이므로 '예약 문의'로 통일)
   ctaText: "예약 문의",
-  email: "help@plumbingservice.co.kr",
+  email: "help@plumbing-service-afo.pages.dev",
   locale: "ko_KR",
   // E-E-A-T: 책임 저자/검수자 정보
   author: {
