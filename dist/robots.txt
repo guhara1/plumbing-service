@@ -11,4 +11,4 @@ Allow: /
 User-agent: Daumoa
 Allow: /
 
-Sitemap: https://plumbingservice.co.kr/sitemap.xml
+Sitemap: https://plumbing-service-afo.pages.dev/sitemap.xml

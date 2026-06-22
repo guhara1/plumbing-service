@@ -4,7 +4,7 @@ export const site = {
   legalName: "스피드 배관공사",
   tagline: "전국 배관공사·하수구막힘 방문 안내",
   // 검색 색인용 기본 도메인 (배포 시 환경변수 SITE_URL 로 교체 가능)
-  baseUrl: process.env.SITE_URL || "https://plumbingservice.co.kr",
+  baseUrl: process.env.SITE_URL || "https://plumbing-service-afo.pages.dev",
   // 전화예약 번호는 준비 중 — 버튼/링크는 예약문의 페이지로 연결한다.
   phone: "준비 중",
   phoneHref: "/contact/",
