@@ -1,0 +1,34 @@
+# 스피드 배관공사 — 전국 배관공사·하수구막힘 방문 안내
+
+스피드 배관공사은(는) 전국 배관공사·하수구막힘 작업 정보를 정리하고 방문 작업을 진행하는 생활수리 서비스입니다. 비용은 현장 구조·막힘 상태에 따라 달라지며 현장 확인 후 안내합니다.
+
+## 주요 안내
+- [홈](https://plumbingservice.co.kr/)
+- [서비스 안내](https://plumbingservice.co.kr/service/)
+- [지역별 안내](https://plumbingservice.co.kr/area/)
+- [비용 안내](https://plumbingservice.co.kr/price/)
+- [작업 전 확인사항](https://plumbingservice.co.kr/guide/)
+- [작업사례](https://plumbingservice.co.kr/case/)
+- [업체 소개](https://plumbingservice.co.kr/about/)
+- [예약문의](https://plumbingservice.co.kr/contact/)
+
+## 서비스
+- [배관공사](https://plumbingservice.co.kr/service/pipe/)
+- [수도배관공사](https://plumbingservice.co.kr/service/water-pipe/)
+- [아파트배관공사](https://plumbingservice.co.kr/service/apartment-pipe/)
+- [상가배관공사](https://plumbingservice.co.kr/service/commercial-pipe/)
+- [배관누수](https://plumbingservice.co.kr/service/leak/)
+- [하수구막힘](https://plumbingservice.co.kr/service/drain/)
+- [싱크대막힘](https://plumbingservice.co.kr/service/sink/)
+- [변기막힘](https://plumbingservice.co.kr/service/toilet/)
+- [세면대막힘](https://plumbingservice.co.kr/service/washbasin/)
+- [욕실배수구막힘](https://plumbingservice.co.kr/service/bathroom-drain/)
+- [주방배수구막힘](https://plumbingservice.co.kr/service/kitchen-drain/)
+- [음식점하수구막힘](https://plumbingservice.co.kr/service/restaurant-drain/)
+- [고압세척](https://plumbingservice.co.kr/service/high-pressure-cleaning/)
+- [배관내시경](https://plumbingservice.co.kr/service/camera-inspection/)
+- [배수관청소](https://plumbingservice.co.kr/service/drain-cleaning/)
+
+## 안내
+- 비용은 현장 구조·막힘 상태에 따라 달라지므로 현장 확인 후 안내합니다.
+- 확인되지 않은 후기나 과장된 사례는 게시하지 않습니다.

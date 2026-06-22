@@ -16,14 +16,14 @@
   4) 의존성:  pip install google-auth requests
 
 사용법:
-  GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py /outcall/ /guide/
+  GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py /service/drain/ /guide/
   GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py   # sitemap 전체
 """
 import os
 import sys
 import xml.etree.ElementTree as ET
 
-HOST = os.environ.get("HOST", "massageintegration.com")
+HOST = os.environ.get("HOST", "plumbingservice.co.kr")
 SCHEME = os.environ.get("SCHEME", "https")
 SITEMAP = os.path.join(os.path.dirname(__file__), "..", "dist", "sitemap.xml")
 ENDPOINT = "https://indexing.googleapis.com/v3/urlNotifications:publish"

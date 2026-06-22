@@ -24,18 +24,18 @@
 python tools/indexnow.py
 
 # 글/페이지를 새로 올리거나 수정할 때 — 해당 URL만 즉시 통보
-python tools/indexnow.py /outcall/ /region/seoul/gangnam/
+python tools/indexnow.py /service/drain/ /area/seoul/gangnam/
 ```
 
-전제: 키 파일이 `https://massageintegration.com/b00508e375ed8ff4e993dc41ca0b8c4a.txt`
+전제: 키 파일이 `https://plumbingservice.co.kr/b00508e375ed8ff4e993dc41ca0b8c4a.txt`
 로 게시되어 있어야 합니다(빌드 시 `dist/`에 자동 생성 → 배포하면 충족).
 
 ## 2. 네이버 — Search Advisor
 
 1. https://searchadvisor.naver.com → 사이트 등록
 2. 소유 확인: `<head>`에 이미 인증 메타가 들어 있음 (자동 확인됨)
-3. **요청 → 사이트맵 제출**: `https://massageintegration.com/sitemap.xml`
-4. **요청 → RSS 제출**: `https://massageintegration.com/rss.xml`
+3. **요청 → 사이트맵 제출**: `https://plumbingservice.co.kr/sitemap.xml`
+4. **요청 → RSS 제출**: `https://plumbingservice.co.kr/rss.xml`
 5. IndexNow는 위 `tools/indexnow.py`로 즉시 통보 (네이버 IndexNow 참여)
 
 ## 3. 구글 — Search Console (기본 경로)
@@ -49,7 +49,7 @@ python tools/indexnow.py /outcall/ /region/seoul/gangnam/
 ### (선택) 구글 Indexing API
 ```bash
 pip install google-auth requests
-GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py /outcall/
+GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py /service/drain/
 ```
 공식 지원 대상은 JobPosting·BroadcastEvent이므로 일반 페이지는 보장되지 않습니다
 (`tools/google_indexing.py` 상단 주석 참고).
@@ -64,7 +64,7 @@ GOOGLE_APPLICATION_CREDENTIALS=sa.json python tools/google_indexing.py /outcall/
 
 | 변수 | 기본값 | 설명 |
 |---|---|---|
-| `HOST` | `massageintegration.com` | 도메인 |
+| `HOST` | `plumbingservice.co.kr` | 도메인 |
 | `SCHEME` | `https` | 프로토콜 |
 | `INDEXNOW_KEY` | `b00508e375ed8ff4e993dc41ca0b8c4a` | IndexNow 키 |
 | `GOOGLE_APPLICATION_CREDENTIALS` | — | 구글 서비스 계정 JSON 경로 |

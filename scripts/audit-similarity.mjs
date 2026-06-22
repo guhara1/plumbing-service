@@ -13,11 +13,9 @@ const files = execSync("find dist -name index.html", { encoding: "utf8" })
 function extractMain(html) {
   let m = html.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
   let s = m ? m[1] : html;
-  // 전 페이지 공통 보일러플레이트 제거 (CTA밴드/FAQ/작성자/콜아웃/JSON-LD/script/style/nav)
-  s = s.replace(/<section class="section cta-band[\s\S]*?<\/section>/gi, " ");
-  s = s.replace(/<section class="section faq-section[\s\S]*?<\/section>/gi, " ");
-  s = s.replace(/<div class="author-box[\s\S]*?<\/div>\s*<\/div>/gi, " ");
-  s = s.replace(/<div class="callout[\s\S]*?<\/div>/gi, " ");
+  // 전 페이지 공통 보일러플레이트 제거 (요금표/후기/JSON-LD/script/style)
+  s = s.replace(/<section class="pricing[\s\S]*?<\/section>/gi, " ");
+  s = s.replace(/<section class="reviews[\s\S]*?<\/section>/gi, " ");
   s = s.replace(/<script[\s\S]*?<\/script>/gi, " ");
   s = s.replace(/<style[\s\S]*?<\/style>/gi, " ");
   s = s.replace(/<nav[\s\S]*?<\/nav>/gi, " ");
@@ -148,7 +146,7 @@ pairs.sort((a, b) => b[0] - a[0]);
 const band = (t) => pairs.filter((p) => p[0] >= t).length;
 
 // ---------- 출력 ----------
-console.log("===== 헬스랜드 콘텐츠 감사 =====");
+console.log("===== 스피드 배관공사 콘텐츠 감사 =====");
 console.log(`총 페이지: ${docs.length}`);
 console.log(`\n[1] 타이틀 정확 중복 그룹: ${titleDups.length}`);
 titleDups.slice(0, 10).forEach(([t, ps]) => console.log(`   "${t}" → ${ps.length}개`));

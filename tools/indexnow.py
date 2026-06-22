@@ -5,8 +5,8 @@ IndexNow 일괄 색인 통보 — 빙(Bing)·네이버(Naver)·얀덱스(Yandex)
 
 사용법:
   python tools/indexnow.py                 # dist/sitemap.xml 의 모든 URL 통보
-  python tools/indexnow.py /outcall/ /guide/   # 특정 경로만 통보(글 올릴 때마다)
-  HOST=massageintegration.com python tools/indexnow.py
+  python tools/indexnow.py /service/drain/ /guide/   # 특정 경로만 통보(글 올릴 때마다)
+  HOST=plumbingservice.co.kr python tools/indexnow.py
 
 전제:
   - 키 파일이 도메인 루트에 게시되어 있어야 함:
@@ -21,7 +21,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 # ── 설정 ───────────────────────────────────────────────
-HOST = os.environ.get("HOST", "massageintegration.com")
+HOST = os.environ.get("HOST", "plumbingservice.co.kr")
 KEY = os.environ.get("INDEXNOW_KEY", "b00508e375ed8ff4e993dc41ca0b8c4a")
 SCHEME = os.environ.get("SCHEME", "https")
 KEY_LOCATION = f"{SCHEME}://{HOST}/{KEY}.txt"
@@ -37,7 +37,7 @@ def urls_from_sitemap(path):
 
 
 def normalize(args):
-    """경로(/outcall/)나 전체 URL을 절대 URL로 변환."""
+    """경로(/service/drain/)나 전체 URL을 절대 URL로 변환."""
     out = []
     for a in args:
         if a.startswith("http"):
