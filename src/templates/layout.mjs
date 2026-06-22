@@ -145,7 +145,16 @@ function renderFooter() {
       </div>
     </div>
   </footer>
-  <a class="mobile-callbar" href="${site.phoneHref}">💬 ${esc(site.ctaText)} · 사진 보내기</a>`;
+  <a class="mobile-callbar" href="${site.phoneHref}">💬 ${esc(site.ctaText)} · 사진 보내기</a>
+
+  <div class="promo-pop" id="promo-pop" role="dialog" aria-label="광고·협업 문의 안내">
+    <button class="promo-close" type="button" aria-label="닫기">×</button>
+    <p class="promo-msg"><strong>스피드 배관공사</strong>광고·협업 문의는 텔레그램으로 편하게 연락 주세요.</p>
+    <div class="promo-btns">
+      <a class="promo-btn" href="https://t.me/googleseolab" target="_blank" rel="noopener noreferrer nofollow"><span aria-hidden="true">✈</span> 광고 문의</a>
+      <a class="promo-btn alt" href="https://t.me/googleseolab" target="_blank" rel="noopener noreferrer nofollow"><span aria-hidden="true">✈</span> 협업 문의</a>
+    </div>
+  </div>`;
 }
 
 // 본문 H2에 앵커 id를 부여하고, 클릭 시 이동하는 목차(TOC)를 자동 생성.

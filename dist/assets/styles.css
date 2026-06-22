@@ -432,6 +432,49 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
 
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
+/* ---------- 광고·협업 문의 팝업(토스트, 6초 후 자동 사라짐) ---------- */
+.promo-pop {
+  position: fixed; right: var(--sp-5); bottom: var(--sp-5); z-index: 120;
+  width: min(92vw, 340px); padding: var(--sp-5) var(--sp-5) var(--sp-4);
+  background: linear-gradient(160deg, #102338, #0b1a2e);
+  border: 1px solid var(--color-border); border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transform: translateY(16px);
+  transition: opacity .35s var(--ease), transform .35s var(--ease), visibility .35s;
+}
+.promo-pop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.promo-pop.hide { opacity: 0; visibility: hidden; transform: translateY(16px); }
+.promo-pop::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  border-radius: var(--r-md) 0 0 var(--r-md);
+  background: linear-gradient(180deg, var(--c-gold-400), var(--c-gold-700));
+}
+.promo-close {
+  position: absolute; top: 6px; right: 8px; width: 26px; height: 26px;
+  background: none; border: none; color: var(--color-muted); font-size: 1.15rem;
+  line-height: 1; cursor: pointer; border-radius: var(--r-sm); transition: color .18s var(--ease), background .18s var(--ease);
+}
+.promo-close:hover { color: var(--c-gold-300); background: var(--color-accent-soft); }
+.promo-msg { margin: 0 0 var(--sp-4); color: var(--color-text-soft); font-size: var(--fs-sm); line-height: 1.6; }
+.promo-msg strong { display: block; color: var(--c-gold-300); font-size: var(--fs-md); margin-bottom: 4px; }
+.promo-btns { display: flex; gap: var(--sp-2); }
+.promo-btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: var(--sp-2) var(--sp-3); border-radius: var(--r-pill); font-weight: 800; font-size: var(--fs-sm);
+  background: linear-gradient(135deg, var(--c-gold-400), var(--c-gold-600)); color: var(--color-on-gold) !important;
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease);
+}
+.promo-btn.alt { background: linear-gradient(135deg, var(--c-steel-500), var(--c-steel-600)); color: #04121f !important; }
+.promo-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+.promo-btn span { display: inline-flex; }
+@media (max-width: 1100px) {
+  .promo-pop { right: var(--sp-4); left: var(--sp-4); bottom: 72px; width: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .promo-pop { transition: opacity .2s linear; transform: none; }
+  .promo-pop.show { transform: none; } .promo-pop.hide { transform: none; }
+}
+
 /* ---------- 15. 마이크로 인터랙션 (스크롤 등장) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); will-change: opacity, transform; }

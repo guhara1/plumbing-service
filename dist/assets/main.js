@@ -102,4 +102,28 @@
       headings.forEach(function (h) { spy.observe(h); });
     }
   } catch (e) { /* 스파이 실패 무시 */ }
+
+  // 광고·협업 문의 팝업 — 로드 후 표시, 6초 뒤 자동으로 사라짐
+  try {
+    var pop = document.getElementById("promo-pop");
+    if (pop) {
+      var hideTimer;
+      var dismiss = function () {
+        pop.classList.remove("show");
+        pop.classList.add("hide");
+        clearTimeout(hideTimer);
+      };
+      // 등장
+      setTimeout(function () { pop.classList.add("show"); }, 600);
+      // 6초 후 자동 사라짐
+      hideTimer = setTimeout(dismiss, 6600);
+      // 닫기 버튼
+      var closeBtn = pop.querySelector(".promo-close");
+      if (closeBtn) closeBtn.addEventListener("click", dismiss);
+      // 텔레그램 버튼 클릭 시에도 닫기
+      pop.querySelectorAll(".promo-btn").forEach(function (b) {
+        b.addEventListener("click", function () { setTimeout(dismiss, 100); });
+      });
+    }
+  } catch (e) { /* 팝업 실패 무시 */ }
 })();
