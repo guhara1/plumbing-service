@@ -117,6 +117,7 @@ function renderFooter() {
             <li><a href="/service/drain/">하수구막힘</a></li>
             <li><a href="/service/">전체 서비스</a></li>
             <li><a href="/area/">지역별 안내</a></li>
+            <li><a href="/subway/">지하철역별 안내</a></li>
           </ul>
         </nav>
         <nav class="footer-col" aria-label="이용 안내">

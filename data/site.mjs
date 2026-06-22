@@ -32,6 +32,7 @@ export const primaryNav = [
   { label: "하수구막힘", url: "/service/drain/" },
   { label: "서비스 안내", url: "/service/", mega: "program" },
   { label: "지역별 안내", url: "/area/", mega: "region" },
+  { label: "지하철역별", url: "/subway/" },
   { label: "비용 안내", url: "/price/" },
   { label: "작업사례", url: "/case/" },
   { label: "예약문의", url: "/contact/" },

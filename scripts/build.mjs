@@ -16,6 +16,8 @@ import { busan, daegu, gwangju, daejeon, ulsan, sejong, jeju } from "../data/met
 import {
   gangwon, chungbuk, chungnam, jeonbuk, jeonnam, gyeongbuk, gyeongnam,
 } from "../data/provinces.mjs";
+import { buildSubwayPages } from "./subway-tree.mjs";
+import { subwaySystems } from "../data/subway.mjs";
 
 // 계층(시·구·행정동) 구조로 생성하는 광역 — 평면 지역 루프에서 제외
 const HIERARCHICAL = new Set([
@@ -149,10 +151,12 @@ function regionLinks(ctx) {
     : REGION_ANCHORS.map(([u, name, suffix]) => [u, `${name} ${suffix}`]);
   const tail = ctx
     ? [
+        ["/subway/", `지하철역별 ${ctx}`],
         ["/price/", `${ctx} 비용 기준`],
         ["/guide/", `작업 전 확인사항`],
       ]
     : [
+        ["/subway/", `지하철역별 안내`],
         ["/price/", `비용이 달라지는 기준`],
         ["/guide/", `작업 전 확인사항`],
       ];
@@ -499,6 +503,11 @@ function homePage() {
     .map((r) => `<a class="chip" href="/area/${r.slug}/">${esc(r.name)}</a>`)
     .join("");
 
+  const subwayChips = subwaySystems[0].lines
+    .slice(0, 9)
+    .map((l) => `<a class="chip" href="/subway/line/${l.slug}/">${esc(l.name)}</a>`)
+    .join("");
+
   const symptomChips = [
     ["drain", "물이 천천히 내려갈 때"],
     ["bathroom-drain", "하수구 냄새가 날 때"],
@@ -556,6 +565,11 @@ function homePage() {
       <p>서울·경기·부산 등 전국 시·도별 방문 안내와 자주 발생하는 배관 문제를 확인할 수 있습니다.</p>
     </div>
     <div class="chip-row">${regionChips}</div>
+    <div class="section-head" style="margin-top:var(--sp-6)"><span class="eyebrow">지하철역별 안내</span>
+      <h2>역세권 기준으로 찾기</h2>
+      <p>강남·서면·역세권 등 지하철 노선·역 기준으로 배관공사·하수구막힘 방문 안내를 확인할 수 있습니다.</p>
+    </div>
+    <div class="chip-row">${subwayChips}<a class="chip" href="/subway/">전체 노선 보기</a></div>
   </div></section>
 
   <section class="section"><div class="container">
@@ -987,7 +1001,7 @@ function rssFeed(urls) {
     String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const pubDate = new Date(MODIFIED + "T09:00:00+09:00").toUTCString();
   const feedPaths = [
-    "/", "/service/", "/area/", "/price/", "/guide/", "/case/", "/about/", "/contact/",
+    "/", "/service/", "/area/", "/subway/", "/price/", "/guide/", "/case/", "/about/", "/contact/",
     ...programs.map((p) => programUrl(p.slug)),
     ...regions.map((r) => `/area/${r.slug}/`),
   ].filter((p, i, a) => urls.includes(p) && a.indexOf(p) === i);
@@ -1106,6 +1120,18 @@ async function build() {
     console.log(`✓ ${label} 계층 ${cnt}페이지 본문 길이: ${mn}~${mx}자`);
   }
 
+  // 지하철 노선/역 페이지 (인덱스 → 노선 → 역) — 역세권 롱테일 SEO
+  {
+    let mn = Infinity, mx = 0, cnt = 0;
+    for (const pg of buildSubwayPages(subwaySystems)) {
+      const m = pg.html.split("<main")[1];
+      const len = m ? m.split("</main>")[0].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length : 0;
+      mn = Math.min(mn, len); mx = Math.max(mx, len); cnt++;
+      await add(pg.path, pg.file, pg.html);
+    }
+    console.log(`✓ 지하철 ${cnt}페이지(노선+역) 본문 길이: ${mn}~${mx}자`);
+  }
+
   await copyAssets();
 
   // robots.txt + sitemap.xml
@@ -1142,6 +1168,7 @@ ${site.legalName}은(는) 전국 배관공사·하수구막힘 작업 정보를 
 - [홈](${u}/)
 - [서비스 안내](${u}/service/)
 - [지역별 안내](${u}/area/)
+- [지하철역별 안내](${u}/subway/)
 - [비용 안내](${u}/price/)
 - [작업 전 확인사항](${u}/guide/)
 - [작업사례](${u}/case/)
