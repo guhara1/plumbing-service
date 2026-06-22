@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" preserveAspectRatio="xMidYMid slice" role="img" aria-label="스피드 배관공사 — 전국 배관공사·하수구막힘 방문 안내">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07101d"/><stop offset="1" stop-color="#102138"/></linearGradient>
+<radialGradient id="glow" cx="76%" cy="26%" r="60%"><stop offset="0" stop-color="#f5852b" stop-opacity="0.5"/><stop offset="55%" stop-color="#f5852b" stop-opacity="0.08"/><stop offset="100%" stop-color="#f5852b" stop-opacity="0"/></radialGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#79c0ec"/><stop offset="1" stop-color="#2f6f9e"/></linearGradient>
+</defs>
+<rect width="1280" height="720" fill="url(#bg)"/>
+<rect width="1280" height="720" fill="url(#glow)"/>
+<g fill="none" stroke="url(#steel)">
+<path d="M-60,520 C260,420 420,650 760,500 1040,385 1170,565 1360,470" stroke-width="2" stroke-opacity="0.45"/>
+<path d="M-60,565 C290,475 470,690 800,545 1090,430 1210,610 1380,515" stroke-width="1.2" stroke-opacity="0.28"/>
+</g>
+<g stroke="#f5852b" stroke-width="10" stroke-linecap="round" opacity="0.85" fill="none">
+<path d="M250,250 h140 a40,40 0 0 1 40,40 v60"/>
+<circle cx="250" cy="250" r="16" fill="#0a1626"/>
+</g>
+<text x="640" y="392" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="64" font-weight="800" fill="#eef4fb" letter-spacing="2">스피드 배관공사</text>
+<text x="640" y="446" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="25" fill="#ffbb7e" letter-spacing="4">전국 배관공사 · 하수구막힘 방문 안내</text>
+<text x="640" y="492" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="20" fill="#8ba0bb" letter-spacing="2">싱크대 · 변기 · 욕실 배수구 · 누수 · 고압세척</text>
+</svg>
