@@ -30,9 +30,10 @@ jobs:
           BASE_PATH: /plumbing-service
           SITE_URL: https://guhara1.github.io/plumbing-service
       - name: Configure Pages
-        # Pages는 저장소 설정에서 한 번만 활성화(Source: GitHub Actions)하면 됨.
-        # 워크플로 토큰은 Pages 사이트를 '생성'할 권한이 없어 enablement는 사용하지 않음.
+        # enablement:true → Pages가 비활성 상태면 워크플로가 자동 활성화 시도.
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
