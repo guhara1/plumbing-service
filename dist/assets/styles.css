@@ -294,6 +294,10 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
   background: linear-gradient(180deg, var(--c-gold-400), var(--c-gold-700));
 }
 
+/* 롱테일 내부링크 라벨 */
+.lt-label { margin: var(--sp-6) 0 var(--sp-2); color: var(--color-text); }
+.lt-label strong { color: var(--c-gold-300); font-size: var(--fs-md); }
+
 .callout { border-left: 3px solid var(--c-gold-500); background: var(--color-accent-soft); border-radius: var(--r-sm); padding: var(--sp-4) var(--sp-5); margin: var(--sp-5) 0; color: var(--color-text-soft); font-size: var(--fs-sm); }
 .callout strong { color: var(--c-gold-300); }
 

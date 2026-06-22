@@ -105,12 +105,20 @@ function textLen(html) {
   return html.replace(/<[^>]+>/g, "").replace(/\s+/g, "").length;
 }
 
-// 고유 본문 길이(목표 2,000~2,500자) — 공용 컴포넌트(작업 방식/비용 기준) 제외하고 측정
+// 고유 본문(프로즈) 길이(목표 2,000~2,500자) 측정.
+// 공용 컴포넌트(작업 방식/비용 기준)와 내비게이션 요소(목차·링크클라우드·칩·빵부스러기)는
+// '콘텐츠 분량'이 아니므로 제외한다 → 롱테일 내부링크는 분량에 합산되지 않고 가산된다.
 function uniqueBodyLen(html) {
   let m = (html.split("<main")[1] || "").split("</main>")[0];
   m = m
     .replace(/<section class="reviews"[\s\S]*?<\/section>/g, "")
-    .replace(/<section class="pricing"[\s\S]*?<\/section>/g, "");
+    .replace(/<section class="pricing"[\s\S]*?<\/section>/g, "")
+    .replace(/<nav class="toc"[\s\S]*?<\/nav>/g, "")
+    .replace(/<nav class="breadcrumb[\s\S]*?<\/nav>/g, "")
+    .replace(/<div class="toc"[\s\S]*?<\/div>/g, "")
+    .replace(/<div class="link-cloud">[\s\S]*?<\/div>/g, "")
+    .replace(/<div class="chip-row">[\s\S]*?<\/div>/g, "")
+    .replace(/<p class="lt-label">[\s\S]*?<\/p>/g, "");
   return m.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
 }
 
@@ -123,6 +131,10 @@ const FLOOR_PARAS = [
   "정확한 비용은 현장 구조, 막힘 정도, 배관 길이, 작업 방식(스프링·고압세척·내시경·교체), 야간·긴급 여부에 따라 달라집니다. 작업 전에는 범위와 비용을 함께 확인한 뒤 진행하며, 추가 비용이 생길 수 있는 기준도 미리 안내합니다. 과장된 문구나 확인되지 않은 후기 대신 실제 작업 기준을 안내하는 것을 원칙으로 합니다.",
   "야간이나 긴급 상황이라면 가능 여부와 도착 예정 시간을 먼저 확인하는 것이 좋습니다. 무리하게 약품을 반복해서 붓는 것은 효과가 일시적이고 배관을 상하게 할 수 있으므로, 증상을 알려 주시면 위치와 원인에 맞는 방법을 안내해 드립니다. 방문 전 준비할 내용은 작업 전 확인사항에서 함께 확인할 수 있습니다.",
   "오래된 건물은 한 곳을 손대면 인접 배관 상태가 함께 드러나는 경우가 있어, 작업 전 현장에서 범위를 함께 확인하는 것이 좋습니다. 노후 배관의 누수나 녹물, 잦은 막힘이 이어진다면 부분 보수로 끝나는지, 라인 정비가 필요한지 점검을 통해 판단하는 것이 재발을 줄이는 길입니다.",
+  "싱크대·세면대·욕실 배수구는 머리카락·비누때·기름·음식물 찌꺼기가 트랩과 배수관에 쌓이며 점점 물빠짐이 느려집니다. 처음에는 천천히 내려가다가 어느 순간 완전히 막히는 경우가 많으므로, 흐름이 나빠지기 시작할 때 점검하면 갑작스러운 역류와 비용을 함께 줄일 수 있습니다.",
+  "주방이나 음식점처럼 기름·음식물 사용이 많은 곳은 관 벽에 기름이 굳어 통로가 좁아지기 쉽습니다. 이런 경우 단순 뚫음은 통로만 잠깐 여는 데 그치고 금방 다시 막히므로, 고압세척으로 관 벽 자체를 씻어 내야 효과가 오래갑니다. 사용량이 많은 곳은 정기 관리를 잡아 두는 편이 안전합니다.",
+  "천장 얼룩이나 벽 곰팡이, 사용하지 않을 때 도는 수도 계량기는 누수의 신호일 수 있습니다. 누수는 물이 보이는 곳과 실제 새는 곳이 다른 경우가 많아, 무작정 벽을 열기보다 탐지로 위치를 먼저 좁힌 뒤 필요한 구간만 작업해야 개방 범위와 복구 비용을 줄일 수 있습니다.",
+  "방문 전에는 막힌 위치와 증상, 건물 유형(아파트·빌라·상가·주택), 역류·냄새 여부, 이전 작업 이력 정도를 정리해 두면 안내가 빨라집니다. 가능하면 현장 사진이나 짧은 영상을 함께 전달해 주시면 필요한 장비와 작업 범위를 미리 준비할 수 있어, 방문 당일 진행이 한결 매끄럽습니다.",
 ];
 function seedNum(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
 function padBody(html, seedStr) {
@@ -139,6 +151,34 @@ function padBody(html, seedStr) {
     used++;
   }
   return out;
+}
+
+// 롱테일 내부링크 강화 — 지역/역 페이지에 '지역명 + 서비스' 앵커를 추가한다.
+// 기존 programChips(drain·sink·toilet·pipe·bathroom-drain)와 중복되지 않도록
+// 나머지 서비스군에서 시드로 6개를 분산 선택(과최적화·중복 앵커 방지).
+const LONGTAIL_SERVICES = [
+  "leak", "water-pipe", "apartment-pipe", "commercial-pipe", "washbasin",
+  "kitchen-drain", "restaurant-drain", "high-pressure-cleaning", "camera-inspection", "drain-cleaning",
+];
+function longtailInject(html, seedStr) {
+  const h1 = (html.match(/<h1>([^<]*)<\/h1>/) || [])[1] || "";
+  const place = h1.split(" 배관공사")[0].split("—")[0].trim();
+  if (!place || !html.includes("</article>")) return html;
+  const s = seedNum(seedStr);
+  const start = s % LONGTAIL_SERVICES.length;
+  const picks = [];
+  for (let i = 0; i < LONGTAIL_SERVICES.length && picks.length < 6; i++) {
+    picks.push(LONGTAIL_SERVICES[(start + i) % LONGTAIL_SERVICES.length]);
+  }
+  const links = picks
+    .map((slug) => {
+      const p = programBySlug[slug];
+      return `<a href="/service/${slug}/">${esc(place + " " + p.label)}</a>`;
+    })
+    .join("");
+  // 자동 목차와의 불일치를 피하려 H2 대신 강조 라벨 사용
+  const block = `\n    <p class="lt-label"><strong>${esc(place)} 인근에서 함께 찾는 배관·하수구 작업</strong></p>\n    <div class="link-cloud">${links}</div>`;
+  return html.replace("</article>", block + "\n  </article>");
 }
 
 // 2,000~2,500자 밴드 집계
@@ -1114,7 +1154,8 @@ async function build() {
   // 서비스 페이지
   let minLen = Infinity;
   for (const p of programs) {
-    const { html } = programPage(p);
+    let html = programPage(p).html;
+    html = padBody(html, programUrl(p.slug));
     const ul = uniqueBodyLen(html);
     recordBand(ul, `service ${p.slug}`);
     minLen = Math.min(minLen, ul);
@@ -1131,7 +1172,10 @@ async function build() {
   // 서울 계층 페이지 (광역 → 자치구 → 행정동)
   let seoulMin = Infinity, seoulMax = 0;
   for (const pg of buildSeoulPages()) {
-    if (!/\/area\/seoul\/$/.test(pg.path)) pg.html = padBody(pg.html, pg.path);
+    if (!/\/area\/seoul\/$/.test(pg.path)) {
+      pg.html = longtailInject(pg.html, pg.path);
+      pg.html = padBody(pg.html, pg.path);
+    }
     const len = uniqueBodyLen(pg.html);
     if (!/\/area\/seoul\/$/.test(pg.path)) recordBand(len, pg.path);
     seoulMin = Math.min(seoulMin, len);
@@ -1162,7 +1206,10 @@ async function build() {
     let mn = Infinity, mx = 0, cnt = 0;
     for (const pg of buildRegionTree(root)) {
       const isContent = pg.path.replace(/[^/]+\/$/, "").split("/").filter(Boolean).length >= 2;
-      if (isContent) pg.html = padBody(pg.html, pg.path);
+      if (isContent) {
+        pg.html = longtailInject(pg.html, pg.path);
+        pg.html = padBody(pg.html, pg.path);
+      }
       const len = uniqueBodyLen(pg.html);
       if (isContent) recordBand(len, pg.path);
       mn = Math.min(mn, len);
@@ -1178,7 +1225,10 @@ async function build() {
     let mn = Infinity, mx = 0, cnt = 0;
     for (const pg of buildSubwayPages(subwaySystems)) {
       const isStation = /^\/subway\/[^/]+\/$/.test(pg.path);
-      if (isStation) pg.html = padBody(pg.html, pg.path);
+      if (isStation) {
+        pg.html = longtailInject(pg.html, pg.path);
+        pg.html = padBody(pg.html, pg.path);
+      }
       const len = uniqueBodyLen(pg.html);
       if (isStation) recordBand(len, pg.path); // 역 페이지만 집계
       mn = Math.min(mn, len); mx = Math.max(mx, len); cnt++;
