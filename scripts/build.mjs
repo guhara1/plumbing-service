@@ -1125,14 +1125,26 @@ async function copyAssets() {
   await writeFile(join(dest, "hero.svg"), hero, "utf8");
 }
 
-function sitemap(urls) {
+function sitemap(urls, imagesByPath = {}) {
+  const xe = (s = "") =>
+    String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const body = urls
-    .map(
-      (u) =>
-        `  <url><loc>${site.baseUrl}${u}</loc><lastmod>${MODIFIED}</lastmod></url>`
-    )
+    .map((u) => {
+      const imgs = imagesByPath[u] || [];
+      const imgXml = imgs
+        .map(
+          (i) =>
+            `\n    <image:image><image:loc>${site.baseUrl}${i.loc}</image:loc><image:title>${xe(
+              i.title
+            )}</image:title></image:image>`
+        )
+        .join("");
+      return `  <url><loc>${site.baseUrl}${u}</loc><lastmod>${MODIFIED}</lastmod>${imgXml}${
+        imgXml ? "\n  " : ""
+      }</url>`;
+    })
     .join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${body}\n</urlset>`;
 }
 
 // IndexNow 키 (빙·네이버·얀덱스 즉시 색인 통보)
@@ -1187,9 +1199,30 @@ async function build() {
   await mkdir(DIST, { recursive: true });
 
   const urls = [];
+  const imagesByPath = {}; // 이미지 사이트맵용: 경로 → [{loc, title}]
   const metaTitles = new Map();
   const metaDescs = new Map();
   const add = async (path, file, html) => {
+    // 페이지의 작업 사진(갤러리) 추출 — 이미지 사이트맵 + 대표 og:image 자동 연결
+    const seen = new Set();
+    const imgs = [];
+    for (const m of html.matchAll(/<img[^>]+src="(\/assets\/gallery\/[^"]+)"[^>]*?alt="([^"]*)"/g)) {
+      if (seen.has(m[1])) continue;
+      seen.add(m[1]);
+      imgs.push({ loc: m[1], title: m[2] });
+    }
+    if (imgs.length) {
+      imagesByPath[path] = imgs;
+      // 실사진(webp/jpg/png)이 있으면 대표 이미지를 og:image 로 승격(SVG 플레이스홀더는 제외 → 회귀 방지)
+      const raster = imgs.find((i) => /\.(webp|jpe?g|png)$/i.test(i.loc));
+      if (raster) {
+        const absImg = site.baseUrl + raster.loc;
+        html = html.replace(
+          /<meta property="og:image" content="[^"]*"/,
+          `<meta property="og:image" content="${absImg}"`
+        );
+      }
+    }
     await write(file, html);
     urls.push(path);
     const t = (html.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
@@ -1318,7 +1351,7 @@ Sitemap: ${site.baseUrl}/sitemap.xml
 `,
     "utf8"
   );
-  await writeFile(join(DIST, "sitemap.xml"), sitemap(urls), "utf8");
+  await writeFile(join(DIST, "sitemap.xml"), sitemap(urls, imagesByPath), "utf8");
   await writeFile(join(DIST, "rss.xml"), rssFeed(urls), "utf8");
   await writeFile(join(DIST, `${INDEXNOW_KEY}.txt`), INDEXNOW_KEY, "utf8");
 
