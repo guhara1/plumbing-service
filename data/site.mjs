@@ -5,11 +5,13 @@ export const site = {
   tagline: "전국 배관공사·하수구막힘 방문 안내",
   // 검색 색인용 기본 도메인 (배포 시 환경변수 SITE_URL 로 교체 가능)
   baseUrl: process.env.SITE_URL || "https://plumbing-service-afo.pages.dev",
-  // 전화예약 번호는 준비 중 — 버튼/링크는 예약문의 페이지로 연결한다.
-  phone: "준비 중",
-  phoneHref: "/contact/",
-  // 버튼 등에 쓰는 CTA 문구 (전화번호 미정이므로 '예약 문의'로 통일)
-  ctaText: "예약 문의",
+  // 영업 전화번호 — 버튼/링크는 tel: 로 바로 전화 연결한다.
+  phone: "010-5183-4300",
+  phoneHref: "tel:010-5183-4300",
+  // 24시 긴급출동 어필 문구 (헤더·푸터·콜바·히어로 공용)
+  emergency: "24시 긴급출동",
+  // 버튼 등에 쓰는 CTA 문구
+  ctaText: "24시 전화상담",
   email: "help@plumbing-service-afo.pages.dev",
   locale: "ko_KR",
   // E-E-A-T: 책임 저자/검수자 정보

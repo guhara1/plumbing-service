@@ -143,6 +143,7 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
   transition: transform .16s var(--ease), box-shadow .16s var(--ease);
 }
 .header-cta:hover { color: var(--color-on-gold); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245,133,43,.36); }
+.header-cta .cta-badge { font-size: var(--fs-xs); font-weight: 800; letter-spacing: .02em; padding: 2px 8px; border-radius: var(--r-pill); background: rgba(0,0,0,.22); color: var(--color-on-gold); }
 
 /* ---------- 5. 메가메뉴 ---------- */
 .has-mega { position: static; }
@@ -217,6 +218,10 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
 .hero h1 { color: var(--color-text); font-size: clamp(2.1rem, 4.6vw, var(--fs-3xl)); max-width: 19ch; }
 .hero p { color: var(--color-text-soft); font-size: var(--fs-md); max-width: 60ch; }
 .hero .eyebrow { color: var(--c-gold-400); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: var(--fs-xs); }
+.hero h1 b { color: var(--c-gold-300); }
+.hero-badges { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-5); }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: var(--r-pill); font-size: var(--fs-sm); font-weight: 700; color: var(--color-text); background: var(--color-accent-soft); border: 1px solid var(--color-border); }
+.hero-badge:first-child { color: var(--c-gold-300); border-color: var(--c-gold-400); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
 
 /* 히어로 대표 이미지 (16:9) — 모바일: 본문 아래 풀폭 / 데스크톱: 오른쪽 프레임 */

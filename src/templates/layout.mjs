@@ -77,7 +77,7 @@ function renderHeader(currentPath) {
         <span>${esc(site.name)}<small>${esc(site.tagline)}</small></span>
       </a>
       ${renderNav(currentPath)}
-      <a class="header-cta desktop" href="${site.phoneHref}">💬 ${esc(site.ctaText)}</a>
+      <a class="header-cta desktop" href="${site.phoneHref}"><span class="cta-badge">${esc(site.emergency)}</span> ☎ ${esc(site.phone)}</a>
       <button class="nav-toggle" aria-label="메뉴 열기" aria-controls="primary-nav" aria-expanded="false">☰</button>
     </div>
   </header>
@@ -94,8 +94,8 @@ function renderFooter() {
           <h4>${esc(site.name)}</h4>
           <p>${esc(site.tagline)}</p>
           <address class="footer-nap">
-            <a class="phone" href="${site.phoneHref}">전화예약 ${esc(site.phone)}</a>
-            <span class="nap-line">전화예약 준비 중 · 예약문의로 접수해 주세요</span>
+            <a class="phone" href="${site.phoneHref}">☎ ${esc(site.phone)}</a>
+            <span class="nap-line">${esc(site.emergency)} · 야간·주말·공휴일 연중무휴 전화상담</span>
             <a class="nap-mail" href="mailto:${esc(site.email)}">${esc(site.email)}</a>
           </address>
           <div class="footer-cta">
@@ -145,7 +145,7 @@ function renderFooter() {
       </div>
     </div>
   </footer>
-  <a class="mobile-callbar" href="${site.phoneHref}">💬 ${esc(site.ctaText)} · 사진 보내기</a>
+  <a class="mobile-callbar" href="${site.phoneHref}">☎ ${esc(site.emergency)} ${esc(site.phone)}</a>
 
   <div class="promo-pop" id="promo-pop" role="dialog" aria-label="광고·협업 문의 안내">
     <button class="promo-close" type="button" aria-label="닫기">×</button>
@@ -225,9 +225,25 @@ export function layout(o) {
     description: site.tagline,
     url: site.baseUrl,
     image: ogImage,
+    telephone: site.phone,
     areaServed: "KR",
     knowsLanguage: "ko",
     serviceType: ["배관공사", "하수구막힘", "고압세척", "배관누수"],
+    // 24시 긴급출동 — 연중무휴 운영
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "00:00",
+      closes: "23:59",
+    },
   };
 
   const breadcrumbLd = o.breadcrumb

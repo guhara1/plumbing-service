@@ -609,10 +609,15 @@ function homePage() {
   <section class="hero">
     <div class="container">
       <p class="eyebrow">${esc(site.tagline)}</p>
-      <h1>전국 배관공사 · 하수구막힘 방문 서비스 안내</h1>
-      <p>싱크대·변기·욕실 배수구 막힘부터 배관누수·배관공사까지. 증상을 먼저 확인하고, 지역별 방문 안내와 작업 전 확인사항을 한곳에서 살펴보세요. 비용은 현장 구조에 따라 달라지므로 현장 확인 후 안내합니다.</p>
+      <h1>전국 배관공사 · 하수구막힘 <b>24시 긴급출동</b></h1>
+      <div class="hero-badges">
+        <span class="hero-badge">🚨 ${esc(site.emergency)}</span>
+        <span class="hero-badge">🕐 야간·주말·공휴일 연중무휴</span>
+        <span class="hero-badge">🚚 전국 방문</span>
+      </div>
+      <p>싱크대·변기·욕실 배수구 막힘부터 배관누수·배관공사까지. 갑작스러운 막힘·누수·역류도 <strong>${esc(site.emergency)}</strong>로 빠르게 도와드립니다. 증상과 위치를 알려 주시면 방문 가능 여부와 도착 예정 시간을 안내하며, 비용은 현장 확인 후 안내합니다.</p>
       <div class="hero-actions">
-        <a class="btn btn-gold" href="${site.phoneHref}">💬 예약 문의 · 사진 보내기</a>
+        <a class="btn btn-gold" href="${site.phoneHref}">☎ ${esc(site.emergency)} ${esc(site.phone)}</a>
         <a class="btn btn-outline" href="/area/">방문 가능 지역 확인</a>
       </div>
     </div>
@@ -878,8 +883,8 @@ function contactPage() {
     h1: "배관공사·하수구막힘 예약 문의",
     desc: "배관공사·하수구막힘 예약 문의 방법과 접수 시 알려 주실 내용, 지역별 방문 확인을 안내합니다.",
     sections: `
-      <p>전화예약 번호는 현재 준비 중입니다. 그동안에는 증상과 위치를 남겨 주시면 방문 가능 여부와 예상 작업 범위를 안내해 드립니다. 사진·영상을 함께 보내 주시면 더 빠르고 정확하게 안내할 수 있습니다.</p>
-      <div class="callout"><strong>전화예약 ${esc(site.phone)}</strong> · 번호 준비 전까지는 증상·위치·사진을 전달해 주시면 안내해 드립니다.</div>
+      <p><strong>${esc(site.phone)}</strong> 번호로 전화 주시면 ${esc(site.emergency)}로 빠르게 도와드립니다. 야간·주말·공휴일에도 전화 상담이 가능하며, 증상과 위치를 알려 주시면 방문 가능 여부와 도착 예정 시간을 안내해 드립니다. 사진·영상을 함께 보내 주시면 더 빠르고 정확하게 안내할 수 있습니다.</p>
+      <div class="callout"><strong>☎ ${esc(site.emergency)} ${esc(site.phone)}</strong> · 야간·주말·공휴일 연중무휴 전화상담</div>
 
       <h2>접수 시 알려 주시면 좋은 내용</h2>
       <ul>
