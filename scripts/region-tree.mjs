@@ -4,6 +4,8 @@
 import { layout, esc, faqLd, articleLd, pricingTable, pricingLd, reviewsSection } from "../src/templates/layout.mjs";
 import { site } from "../data/site.mjs";
 import { programBySlug } from "../data/programs.mjs";
+import { keywordCloud, keywordPhrase } from "../data/keywords.mjs";
+import { pageFigure } from "../data/images.mjs";
 import { slugify } from "./romanize.mjs";
 import { vpick, vsubset, vshuffle } from "./variants.mjs";
 
@@ -213,7 +215,7 @@ function dongPage(node) {
     {
       q: `${dongName}에서 배관공사도 맡길 수 있나요?`,
       a: vpick(vb, "fa2", [
-        `네, 노후 배관 교체·누수 보수·라인 정비 등 배관공사도 ${dongName} 방문 권역인지 접수 시 확인하면 됩니다. 현장 점검 후 문제 구간만 필요한 만큼 작업하는 것을 원칙으로 합니다.`,
+        `네, 노후 배관 교체·누수탐지·누수공사·수전교체·변기부속품수리 등 배관설비 작업도 ${dongName} 방문 권역인지 접수 시 확인하면 됩니다. 현장 점검 후 문제 구간만 필요한 만큼 작업하는 것을 원칙으로 합니다.`,
         `배관공사는 막힘과 달리 배관 자체를 보수·교체하는 작업입니다. ${dongName} 인근에서 권역에 포함되는지 확인하고, 증상과 건물 유형을 함께 알리면 작업 범위를 안내받을 수 있습니다.`,
       ]),
     },
@@ -248,7 +250,8 @@ function dongPage(node) {
   const secCompare = `
     <h2>${esc(dongName)} 배관·하수구 작업 방식 안내</h2>
     <p>${esc(comparePara)}</p>
-    ${programChips(dongName)}`;
+    <p>${esc(dongName)} 인근에서 자주 찾는 작업으로는 ${esc(keywordPhrase(vb, "kwA", 5))} 등이 있으며, 막힌 위치와 원인에 따라 이물질 제거·고압세척·배관내시경·부품 교체 중 필요한 방식을 정합니다.</p>
+    ${keywordCloud(vb, dongName)}`;
   const secFlow = `
     <h2>${esc(dongName)} 방문 가능 생활권과 이동</h2>
     <p>${esc(flowPara)}</p>`;
@@ -277,6 +280,7 @@ function dongPage(node) {
   )}</p>
     <h1>${esc(dongName)} 배관공사·하수구막힘 방문 안내</h1>
     ${secOverview}
+    ${pageFigure(vb, dongName)}
     ${middle}
 
     <h2>${esc(dongName)} 인근 지역</h2>
@@ -359,8 +363,8 @@ function branchPage(node) {
     {
       q: `${fullName}에서 받을 수 있는 작업은 무엇인가요?`,
       a: vpick(vb, "fa2", [
-        `하수구막힘·싱크대막힘·변기막힘·욕실배수구막힘 같은 막힘 작업과 노후 배관 교체·누수 보수 등 배관공사를 함께 확인할 수 있습니다.`,
-        `막힘 뚫음(스프링·고압세척), 배관내시경 점검, 배관 부분 교체·누수 보수 등을 ${nm} 기준으로 확인할 수 있습니다.`,
+        `하수구막힘·배수구막힘·변기막힘·세면대막힘 같은 막힘 뚫음과 누수탐지·누수공사·수도누수 보수, 수전교체·세면대교체·화장실변기교체·변기부속품수리까지 함께 확인할 수 있습니다.`,
+        `배수구뚫음·고압세척 같은 막힘 작업, 배관내시경 점검, 누수탐지·누수공사, 배관설비·수전교체·부품 수리 등을 ${nm} 기준으로 확인할 수 있습니다.`,
       ]),
     },
     {
@@ -442,11 +446,11 @@ function branchPage(node) {
   const secPrograms = `
     <h2>${esc(nm)}에서 확인해 볼 작업</h2>
     <p>${esc(vpick(vb, "prog", [
-      `하수구막힘·싱크대막힘·변기막힘·욕실배수구막힘 같은 막힘 작업과 노후 배관 교체·누수 보수 등 배관공사를 ${nm} 기준으로 확인해 보세요.`,
-      `${nm} 인근에서는 막힘 뚫음(스프링·고압세척), 배관내시경 점검, 배관 부분 교체·누수 보수를 증상에 맞게 확인하면 됩니다.`,
-      `증상과 위치에 따라 막힘 뚫음, 고압세척, 배관내시경, 배관 교체 중에서 ${nm} 기준으로 확인해 보세요.`,
+      `하수구막힘·배수구막힘·싱크대하수구막힘·변기막힘·세면대막힘 같은 막힘 뚫음부터 누수탐지·누수공사·배관막힘·수전교체·변기부속품수리까지, ${nm} 기준으로 필요한 작업을 확인해 보세요.`,
+      `${nm} 인근에서는 배수구뚫음·고압세척 같은 막힘 작업과 누수탐지·수도누수·욕실배관누수·주방배관누수 같은 누수공사, 수전교체·세면대교체·화장실변기교체 등 교체·수리를 증상에 맞게 확인하면 됩니다.`,
+      `증상과 위치에 따라 배수구막힘·주방배수구막힘·변기막힘 같은 막힘 뚫음, 누수탐지·누수공사·수도수리, 수전교체·세면대교체·변기부속품수리 중에서 ${nm} 기준으로 확인해 보세요.`,
     ]))}</p>
-    ${programChips(nm)}
+    ${keywordCloud(vb, nm)}
     ${callout()}`;
 
   const secBooking = `
@@ -496,7 +500,7 @@ function branchPage(node) {
     </div></section>
     ${childSection}
     <section class="section section-alt"><div class="container prose">
-      ${secFeature}${secWho}${secCompare}${secGuide}${secPrograms}${secBooking}${secChecklist}${secFaq}
+      ${secFeature}${pageFigure(vb, node.name)}${secWho}${secCompare}${secGuide}${secPrograms}${secBooking}${secChecklist}${secFaq}
     </div></section>
     ${reviewsSection()}
   ${pricingTable()}`;
@@ -509,7 +513,7 @@ function branchPage(node) {
     <article class="section-tight"><div class="container prose">
       <p class="card-tag" style="color:var(--color-accent);font-weight:700">${esc(metro)}</p>
       <h1>${esc(fullName)} 배관공사·하수구막힘 방문 안내</h1>
-      ${secFeature}${pre}
+      ${secFeature}${pageFigure(vb, fullName)}${pre}
       ${childSection}
       ${post}${secFaq}
     </div></article>

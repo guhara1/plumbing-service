@@ -241,6 +241,22 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
   }
 }
 
+/* ---------- 작업 사진(이미지 공간) ---------- */
+/* aspect-ratio 로 자리를 먼저 잡아 이미지 교체 시에도 레이아웃이 흔들리지 않는다(CLS 방지). */
+.media-figure { margin: var(--sp-5) 0; }
+.media-figure img {
+  display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  background: #0b1a2e; border: 1px solid var(--color-border); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md, 0 10px 24px rgba(0,0,0,.28));
+}
+.media-figure figcaption {
+  margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--color-muted); text-align: center;
+}
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--sp-4);
+}
+.gallery-grid .media-figure { margin: 0; }
+
 /* ---------- 9. 섹션 / 그리드 ---------- */
 .section { padding: var(--sp-10) 0; }
 .section-tight { padding: var(--sp-8) 0; }

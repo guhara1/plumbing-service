@@ -5,6 +5,8 @@
 import { layout, esc, faqLd, articleLd, pricingTable, pricingLd, reviewsSection } from "../src/templates/layout.mjs";
 import { site } from "../data/site.mjs";
 import { programBySlug } from "../data/programs.mjs";
+import { keywordCloud, keywordPhrase } from "../data/keywords.mjs";
+import { pageFigure } from "../data/images.mjs";
 import { slugify } from "./romanize.mjs";
 import { vpick, vsubset, vshuffle, vflag } from "./variants.mjs";
 
@@ -177,7 +179,8 @@ function stationPage(reg, sys) {
   const secCompare = `
     <h2>${esc(station)} 인근에서 진행하는 작업 방식</h2>
     <p>${esc(comparePara)}</p>
-    ${programChips(station)}`;
+    <p>${esc(station)} 인근에서 자주 찾는 작업으로는 ${esc(keywordPhrase(vb, "kwA", 5))} 등이 있으며, 이물질 제거·고압세척·배관내시경·부품 교체로 원인에 맞게 접근합니다.</p>
+    ${keywordCloud(vb, station)}`;
   const secFlow = `
     <h2>${esc(station)} 배관공사·하수구막힘 작업 흐름</h2>
     <p>${esc(flowPara)}</p>`;
@@ -206,6 +209,7 @@ function stationPage(reg, sys) {
     <p class="card-tag" style="color:var(--color-accent);font-weight:700">${esc(sys.name)} 지하철 · ${esc(lineText)}</p>
     <h1>${esc(station)} 배관공사·하수구막힘 방문 안내</h1>
     ${secOverview}
+    ${pageFigure(vb, station)}
     ${middle}
 
     <h2>${esc(station)} 노선·인접역</h2>
@@ -258,7 +262,7 @@ function linePage(line, sys) {
   ]);
   const compare = vpick(vb, "compare", [
     `가벼운 막힘은 스프링 뚫음, 기름·찌꺼기 누적은 고압세척, 원인 불명·반복 막힘은 배관내시경, 노후 배관 누수는 부분 교체·라인 정비로 접근합니다. 증상과 위치에 따라 적합한 방식이 달라집니다.`,
-    `${line.name} 인근에서는 하수구막힘·싱크대막힘·변기막힘 같은 막힘 작업부터 배관공사·누수 보수, 고압세척까지 증상에 맞게 진행합니다. 막힌 위치를 먼저 확인하면 작업이 정확합니다.`,
+    `${line.name} 인근에서는 하수구막힘·배수구막힘·변기막힘 같은 막힘 뚫음부터 누수탐지·누수공사, 수전교체·세면대교체, 고압세척까지 증상에 맞게 진행합니다. 막힌 위치를 먼저 확인하면 작업이 정확합니다.`,
     `막힘 정도와 위치에 따라 스프링(가벼운 막힘), 고압세척(기름 누적), 배관내시경(원인 확인), 부분 교체(노후·누수) 중에서 현장 점검 후 선택합니다.`,
   ]);
   const useGuide = vpick(vb, "use", [
@@ -291,7 +295,8 @@ function linePage(line, sys) {
   const secCompare = `
     <h2>${esc(line.name)} 인근에서 진행하는 작업 방식</h2>
     <p>${esc(compare)}</p>
-    ${programChips(line.name)}
+    <p>${esc(line.name)} 인근에서 자주 찾는 작업으로는 ${esc(keywordPhrase(vb, "kwA", 5))} 등이 있습니다.</p>
+    ${keywordCloud(vb, line.name)}
     ${callout()}`;
   const secWho = `
     <h2>${esc(line.name)} 인근에서 배관공사·하수구막힘을 찾는 경우</h2>
@@ -329,6 +334,7 @@ function linePage(line, sys) {
     <p class="card-tag" style="color:var(--color-accent);font-weight:700">${esc(sys.name)} 지하철</p>
     <h1>${esc(line.name)} 배관공사·하수구막힘 — 역별 안내</h1>
     <p>${esc(intro)}</p>
+    ${pageFigure(vb, line.name)}
     ${secStations}
     ${middle}
 

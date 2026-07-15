@@ -8,6 +8,8 @@ import { programs, programBySlug } from "../data/programs.mjs";
 import { extra as programExtra, regionNote } from "../data/programs-extra.mjs";
 import { regions, placeBySlug, regionGroups } from "../data/regions.mjs";
 import { layout, esc, faqLd, articleLd, pricingTable, pricingLd, reviewsSection } from "../src/templates/layout.mjs";
+import { keywordLinks } from "../data/keywords.mjs";
+import { galleryImages, galleryGrid } from "../data/images.mjs";
 import { buildSeoulPages } from "./locations.mjs";
 import { buildRegionTree } from "./region-tree.mjs";
 import { incheon } from "../data/incheon.mjs";
@@ -415,9 +417,9 @@ function programIndex() {
     <div class="container">
       <p class="eyebrow">서비스 안내</p>
       <h1>배관공사·하수구막힘 서비스 안내</h1>
-      <p>배관공사·수도배관·누수부터 하수구막힘·싱크대·변기·욕실 배수구, 고압세척·배관내시경까지. 증상에 맞는 작업 방식과 확인 기준을 정리했습니다.</p>
+      <p>누수탐지·누수공사·수도누수부터 하수구막힘·배수구뚫음·싱크대·변기·세면대막힘, 수전교체·세면대교체·변기부속품수리, 고압세척·배관내시경까지. 증상에 맞는 작업 방식과 확인 기준을 정리했습니다.</p>
       <div class="hero-actions">
-        <a class="btn btn-gold" href="${site.phoneHref}">💬 예약 문의</a>
+        <a class="btn btn-gold" href="${site.phoneHref}">☎ ${esc(site.emergency)} ${esc(site.phone)}</a>
         <a class="btn btn-outline" href="/area/">지역별 안내 보기</a>
       </div>
     </div>
@@ -640,9 +642,27 @@ function homePage() {
     <p style="margin-top:var(--sp-5)"><a class="btn btn-outline" href="/service/">전체 서비스 보기</a></p>
   </div></section>
 
-  <section class="section"><div class="container prose">
+  <section class="section section-alt"><div class="container">
+    <div class="section-head"><span class="eyebrow">전문 시공 분야</span>
+      <h2>이런 작업을 전문으로 합니다</h2>
+      <p>누수탐지·누수공사부터 하수구막힘·배수구뚫음, 수전교체·세면대교체·변기교체·변기부속품수리까지. 필요한 작업을 눌러 확인하세요.</p>
+    </div>
+    <div class="chip-row">${keywordLinks
+      .map((k) => `<a class="chip" href="/service/${k.slug}/">${esc(k.kw)}</a>`)
+      .join("")}</div>
+  </div></section>
+
+  <section class="section"><div class="container">
+    <div class="section-head"><span class="eyebrow">작업 갤러리</span>
+      <h2>현장 작업 사진</h2>
+      <p>누수탐지·하수구막힘·수전교체·변기교체·고압세척 등 실제 작업 현장을 담았습니다. (사진은 순차적으로 실사진으로 교체됩니다.)</p>
+    </div>
+    ${galleryGrid()}
+  </div></section>
+
+  <section class="section section-alt"><div class="container prose">
     <h2>배관공사와 하수구막힘, 무엇이 다른가요</h2>
-    <p>배관공사는 단순히 막힌 곳을 뚫는 작업만이 아니라 오래된 배관 교체, 수도배관 연결, 배수관 정비, 누수 보수처럼 배관 자체를 손보는 작업까지 포함합니다. 반면 <a href="/service/drain/">하수구막힘</a>은 배수 흐름이 느려지거나 역류·악취·이물질 누적 같은 증상에서 시작되는 막힘 문제입니다. 그래서 증상을 먼저 정확히 확인하면 필요한 작업을 빠르게 좁힐 수 있습니다.</p>
+    <p>배관공사는 단순히 막힌 곳을 뚫는 작업만이 아니라 오래된 배관 교체·배관설비, 수도배관 연결, 배수관 정비, 누수탐지·누수공사, 수전교체·세면대교체·변기부속품수리처럼 배관 자체를 손보는 작업까지 포함합니다. 반면 <a href="/service/drain/">하수구막힘</a>·<a href="/service/drain/">배수구막힘</a>은 배수 흐름이 느려지거나 역류·악취·이물질 누적 같은 증상에서 시작되는 막힘 문제로, 배수구뚫음·고압세척·배관내시경으로 접근합니다. 그래서 증상을 먼저 정확히 확인하면 필요한 작업을 빠르게 좁힐 수 있습니다.</p>
     <h2>지역과 증상으로 좁혀 가세요</h2>
     <p>같은 문제라도 아파트·빌라·상가·음식점에 따라 원인과 작업이 다릅니다. <a href="/area/">지역별 안내</a>에서 방문 가능 지역을 확인하고, <a href="/service/">서비스 안내</a>에서 증상별 작업 방식을 비교한 뒤, <a href="/guide/">작업 전 확인사항</a>을 살펴보면 처음 문의하는 분도 어렵지 않게 진행할 수 있습니다. 비용 기준이 궁금하다면 <a href="/price/">비용 안내</a>를 참고하세요.</p>
   </div></section>
@@ -678,7 +698,7 @@ function homePage() {
   return layout({
     title: `${site.name} | ${site.tagline}`,
     description:
-      "전국 배관공사·하수구막힘 방문 안내. 싱크대·변기·욕실 배수구·누수 등 증상별·지역별 안내.",
+      "전국 배관공사·하수구막힘·누수탐지·수전교체 24시 방문. 배수구막힘·변기막힘·세면대교체 등 안내.",
     path: "/",
     body,
     structuredData: [pricingLd()],
@@ -1034,12 +1054,46 @@ function termsPage() {
 }
 
 // ---------- 에셋 / 사이트맵 ----------
+// 작업 사진 플레이스홀더 (4:3, 800×600) — 실사진 교체 전까지 자리(공간)를 잡아 준다.
+function galleryPlaceholder(img, n) {
+  const nn = String(n).padStart(2, "0");
+  const label = esc(img.label);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="${esc(img.alt)}">
+<defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1a2e"/><stop offset="1" stop-color="#12263f"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#pg)"/>
+<rect x="20" y="20" width="760" height="560" rx="20" fill="none" stroke="#33507a" stroke-opacity="0.6" stroke-dasharray="10 10"/>
+<g transform="translate(400 250)" fill="none" stroke="#f5852b" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" opacity="0.9">
+<rect x="-70" y="-44" width="140" height="96" rx="14"/>
+<circle cx="0" cy="6" r="30"/>
+<path d="M-44 -44 l16 -22 h56 l16 22"/>
+</g>
+<text x="400" y="392" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="46" font-weight="800" fill="#eef4fb">${label}</text>
+<text x="400" y="440" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="24" fill="#ffbb7e" letter-spacing="1">스피드 배관공사 작업 사진 ${nn}</text>
+<text x="400" y="478" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="18" fill="#8ba0bb">이미지 준비 중 · 실사진으로 교체 예정</text>
+</svg>`;
+}
+
 async function copyAssets() {
   const src = join(ROOT, "src", "assets");
   const dest = join(DIST, "assets");
   await mkdir(dest, { recursive: true });
-  for (const f of await readdir(src)) {
-    await copyFile(join(src, f), join(dest, f));
+  for (const f of await readdir(src, { withFileTypes: true })) {
+    if (f.isDirectory()) continue; // 하위 폴더(gallery 등)는 아래에서 별도 처리
+    await copyFile(join(src, f.name), join(dest, f.name));
+  }
+
+  // 작업 사진 갤러리(21장) — 실사진이 src/assets/gallery/ 에 있으면 복사, 없으면 플레이스홀더 생성
+  const galSrc = join(src, "gallery");
+  const galDest = join(dest, "gallery");
+  await mkdir(galDest, { recursive: true });
+  for (let i = 0; i < galleryImages.length; i++) {
+    const img = galleryImages[i];
+    const real = join(galSrc, img.file);
+    if (existsSync(real)) {
+      await copyFile(real, join(galDest, img.file));
+    } else {
+      await writeFile(join(galDest, img.file), galleryPlaceholder(img, i + 1), "utf8");
+    }
   }
   // 기본 OG 이미지 / 파비콘(SVG) — 프리미엄 네이비 + 오렌지
   const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081325"/><stop offset="1" stop-color="#0f2138"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/><circle cx="1010" cy="120" r="220" fill="#f5852b" opacity="0.16"/><text x="80" y="290" font-family="Pretendard, sans-serif" font-size="78" font-weight="800" fill="#eef4fb">스피드 배관공사</text><text x="80" y="372" font-family="Pretendard, sans-serif" font-size="38" fill="#ffbb7e">전국 배관공사·하수구막힘 방문 안내</text><text x="80" y="452" font-family="Pretendard, sans-serif" font-size="32" font-weight="700" fill="#79c0ec">싱크대·변기·욕실 배수구·누수·고압세척</text></svg>`;

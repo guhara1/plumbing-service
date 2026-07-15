@@ -4,6 +4,8 @@
 import { layout, esc, faqLd, articleLd, pricingTable, pricingLd, reviewsSection } from "../src/templates/layout.mjs";
 import { site } from "../data/site.mjs";
 import { programBySlug } from "../data/programs.mjs";
+import { keywordCloud, keywordPhrase } from "../data/keywords.mjs";
+import { pageFigure } from "../data/images.mjs";
 import { seoul } from "../data/seoul.mjs";
 import { slugify } from "./romanize.mjs";
 import { dongMeta, branchMeta } from "./region-tree.mjs";
@@ -147,7 +149,8 @@ function dongPage(gu, dongName, siblings) {
   const secCompare = `
     <h2>${esc(dongName)}에서 증상별로 살펴볼 작업</h2>
     <p>${esc(comparePara)}</p>
-    ${programChips(dongName)}`;
+    <p>${esc(dongName)}에서 자주 찾는 키워드로는 ${esc(keywordPhrase(vb, "kwA", 5))} 등이 있으며, 증상에 맞춰 이물질 제거·고압세척·배관내시경·부품 교체로 접근합니다.</p>
+    ${keywordCloud(vb, dongName)}`;
   const secFlow = `
     <h2>${esc(dongName)} 방문 작업 흐름</h2>
     <p>${esc(flowPara)}</p>
@@ -186,6 +189,7 @@ function dongPage(gu, dongName, siblings) {
     )}</p>
     <h1>${esc(dongName)} 배관공사·하수구막힘 방문 안내</h1>
     ${secOverview}
+    ${pageFigure(vb, dongName)}
     ${middle}
 
     <h2>${esc(dongName)} 인근 지역</h2>
@@ -272,8 +276,8 @@ function guPage(gu) {
     {
       q: `${nm}에서 어떤 작업을 맡길 수 있나요?`,
       a: vpick(vb, "fa2", [
-        `싱크대·변기·욕실 배수구막힘 같은 막힘 작업부터 노후 배관 누수·교체 같은 배관공사, 고압세척·배관내시경 점검까지 ${nm} 기준으로 안내합니다.`,
-        `하수구막힘·싱크대막힘·변기막힘 등 막힘 작업과 배관누수·교체, 상가·음식점 주방 배관 세척까지 ${nm} 안에서 안내받을 수 있습니다.`,
+        `하수구막힘·배수구막힘·세면대막힘 같은 막힘 뚫음부터 누수탐지·누수공사·수도누수 보수, 수전교체·세면대교체·화장실변기교체·변기부속품수리, 고압세척·배관내시경 점검까지 ${nm} 기준으로 안내합니다.`,
+        `하수구막힘·배수구뚫음·변기막힘 등 막힘 작업과 누수탐지·누수공사, 수전교체·배관설비, 상가·음식점 주방 배관 세척까지 ${nm} 안에서 안내받을 수 있습니다.`,
       ]),
     },
     {
@@ -324,11 +328,11 @@ function guPage(gu) {
   const secPrograms = `
     <h2>${esc(nm)}에서 증상별로 살펴볼 작업</h2>
     <p>${esc(vpick(vb, "prog", [
-      `욕실·세면대 물빠짐이 느리면 하수구막힘·욕실배수구를, 싱크대 역류는 싱크대막힘을, 변기가 차오르면 변기막힘을 확인해 보세요. 누수가 반복되면 막힘 작업이 아니라 배관공사가 필요할 수 있습니다.`,
-      `${nm} 인근에서는 싱크대·욕실 배수 막힘, 변기막힘, 노후 배관 누수까지 증상이 제각각입니다. 막힌 위치와 역류·냄새 여부를 먼저 정리하면 작업 선택이 쉬워집니다.`,
-      `막힌 위치와 증상에 따라 하수구막힘·싱크대막힘·변기막힘·욕실배수구막힘·배관공사 중에서 ${nm} 기준으로 비교해 보세요.`,
+      `욕실·세면대 물빠짐이 느리면 하수구막힘·세면대막힘·배수구막힘을, 싱크대 역류는 싱크대하수구막힘을, 변기가 차오르면 변기막힘을 확인해 보세요. 물샘·누수가 반복되면 누수탐지·누수공사가 필요할 수 있습니다.`,
+      `${nm} 인근에서는 배수구뚫음·주방배수구막힘 같은 막힘, 변기막힘·변기부속품수리, 수전교체·세면대교체, 수도누수·욕실배관누수 같은 누수공사까지 증상이 제각각입니다. 막힌 위치와 역류·냄새 여부를 먼저 정리하면 작업 선택이 쉬워집니다.`,
+      `막힌 위치와 증상에 따라 하수구막힘·배수구막힘·변기막힘·세면대막힘 같은 뚫음, 누수탐지·수도수리, 수전교체·화장실변기교체 중에서 ${nm} 기준으로 비교해 보세요.`,
     ]))}</p>
-    ${programChips(nm)}
+    ${keywordCloud(vb, nm)}
     ${callout()}`;
   const secBooking = `
     <h2>${esc(nm)} 예약 문의 안내</h2>
@@ -369,7 +373,7 @@ function guPage(gu) {
   <article class="section-tight"><div class="container prose">
     <p class="card-tag" style="color:var(--color-accent);font-weight:700">서울특별시</p>
     <h1>서울 ${esc(gu.name)} 배관공사·하수구막힘 방문 안내</h1>
-    ${secFeature}${pre}
+    ${secFeature}${pageFigure(vb, "서울 " + gu.name)}${pre}
     ${secDongs}
     ${post}${secFaq}
 
@@ -438,6 +442,7 @@ function seoulOverviewPage() {
     <h2>서울에서 배관공사·하수구막힘 방문 안내를 찾는 방법</h2>
     <p>서울은 강남·서초·송파 같은 동남권부터 마포·서대문·은평 등 서북권, 노원·도봉·강북 등 동북권까지 자치구별로 주거·상가 비중과 배관 환경이 다릅니다. 먼저 자치구를 고른 뒤 행정동까지 좁혀 가면, 같은 ‘서울 하수구막힘’이라도 본인 위치에 맞는 방문 권역과 도착 소요 시간을 더 정확히 확인할 수 있습니다.</p>
     <p>작업은 막힌 위치와 원인을 현장에서 확인한 뒤 스프링(관통기), 고압세척, 부분 교체 중 필요한 방식으로 진행하며, 반복 막힘이나 누수는 배관내시경으로 원인 구간을 확인합니다. 자주 발생하는 배관 문제는 가정 욕실·싱크대 막힘부터 상가·음식점 주방 하수구막힘까지 구별로 다릅니다. 숫자로 나뉜 행정동(○○1동·2동 등)은 대표 동명으로 통합해 안내하므로, 원하는 동네 이름으로 바로 찾아볼 수 있습니다.</p>
+    ${pageFigure("SEOUL␟서울␟overview", "서울")}
     ${callout()}
     <h2>자주 묻는 질문</h2>
     <div class="faq">
