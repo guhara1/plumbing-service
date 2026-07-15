@@ -147,6 +147,7 @@ function renderFooter() {
   </footer>
   <a class="mobile-callbar" href="${site.phoneHref}">☎ ${esc(site.emergency)} ${esc(site.phone)}</a>
 
+  <!-- 광고·협업 문의 팝업 비활성화(주석 처리) — 필요 시 아래 블록 주석을 해제하세요.
   <div class="promo-pop" id="promo-pop" role="dialog" aria-label="광고·협업 문의 안내">
     <button class="promo-close" type="button" aria-label="닫기">×</button>
     <p class="promo-msg"><strong>스피드 배관공사</strong>광고·협업 문의는 텔레그램으로 편하게 연락 주세요.</p>
@@ -154,7 +155,8 @@ function renderFooter() {
       <a class="promo-btn" href="https://t.me/googleseolab" target="_blank" rel="noopener noreferrer nofollow"><span aria-hidden="true">✈</span> 광고 문의</a>
       <a class="promo-btn alt" href="https://t.me/googleseolab" target="_blank" rel="noopener noreferrer nofollow"><span aria-hidden="true">✈</span> 협업 문의</a>
     </div>
-  </div>`;
+  </div>
+  -->`;
 }
 
 // 본문 H2에 앵커 id를 부여하고, 클릭 시 이동하는 목차(TOC)를 자동 생성.
