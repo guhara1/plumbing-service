@@ -295,6 +295,8 @@ h3 { font-size: var(--fs-lg); margin: var(--sp-6) 0 var(--sp-3); }
   transition: border-color .18s var(--ease), color .18s var(--ease), background .18s var(--ease), transform .18s var(--ease);
 }
 .chip:hover, .link-cloud a:hover { border-color: var(--c-gold-500); color: var(--c-gold-300); background: var(--color-accent-soft); transform: translateY(-2px); }
+/* 수식어 키워드 캡션 — 링크 클라우드 아래 한 줄로 은은하게(숨김 아님) */
+.kw-mods { flex-basis: 100%; margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--color-muted); line-height: 1.7; }
 
 /* ---------- 12. 본문 / 콜아웃 / 목차 / FAQ ---------- */
 .prose { max-width: 760px; }

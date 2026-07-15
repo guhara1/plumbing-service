@@ -8,7 +8,7 @@ import { programs, programBySlug } from "../data/programs.mjs";
 import { extra as programExtra, regionNote } from "../data/programs-extra.mjs";
 import { regions, placeBySlug, regionGroups } from "../data/regions.mjs";
 import { layout, esc, faqLd, articleLd, pricingTable, pricingLd, reviewsSection } from "../src/templates/layout.mjs";
-import { keywordLinks } from "../data/keywords.mjs";
+import { keywordLinks, keywordCloud } from "../data/keywords.mjs";
 import { galleryImages, galleryGrid } from "../data/images.mjs";
 import { buildSeoulPages } from "./locations.mjs";
 import { buildRegionTree } from "./region-tree.mjs";
@@ -566,6 +566,8 @@ function regionIndex() {
     <h2>지역마다 무엇이 다른가요</h2>
     <p>같은 ‘배관공사·하수구막힘’이라도 지역에 따라 주거 형태와 상권이 달라 자주 발생하는 문제가 다릅니다. 아파트가 많은 지역은 욕실·싱크대 배수와 세대·공용 배관 구분이, 상가·음식점이 밀집한 지역은 주방 하수구와 기름 누적이 중심입니다. 어떤 작업이 필요한지 먼저 보고 싶다면 <a href="/service/">서비스 안내</a>에서 증상별로 비교해 보세요. 경기도 광주시는 광주광역시와 다른 지역이므로 위치를 정확히 확인해 주세요.</p>
     <div class="callout">정확한 비용은 현장 구조·막힘 상태에 따라 달라집니다. <strong>현장 확인 후 안내</strong>합니다.</div>
+    <h2>전국에서 진행하는 작업</h2>
+    ${keywordCloud("AREA-INDEX", "전국")}
   </div></section>
   ${reviewsSection()}
   ${pricingTable()}`;
@@ -650,6 +652,7 @@ function homePage() {
     <div class="chip-row">${keywordLinks
       .map((k) => `<a class="chip" href="/service/${k.slug}/">${esc(k.kw)}</a>`)
       .join("")}</div>
+    <p class="kw-mods">이물질 제거 · 배수구뚫음 · 고압세척 · 배관내시경 · 역류 · 물샘 · 수도누수 · 부품 교체 · 수리 · 공사 비용 · 가격 안내 전문 업체</p>
   </div></section>
 
   <section class="section"><div class="container">
